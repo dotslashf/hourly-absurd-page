@@ -1,22 +1,42 @@
-import { Card } from "flowbite-react";
+import { useEffect, useState } from "react";
+import { TweetV1TimelineResult } from "twitter-api-v2";
+import Card from "./Card";
 
-const Cards: React.FC = () => {
+const Cards = () => {
+  const [data, setData] = useState<TweetV1TimelineResult>([]);
+  const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    setLoading(true);
+    fetch("/api/twitter")
+      .then((res) => res.json())
+      .then((data) => {
+        setData(data.tweets);
+        setLoading(false);
+      });
+  }, []);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (!data) {
+    return <p>No data</p>;
+  }
+
   return (
-    <div className="grid grid-cols-4 gap-4">
-      {Array(8)
-        .fill(0)
-        .map((_, index) => {
-          return (
-            <Card key={index}>
-              <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                Card {index + 1}
-              </h5>
-              <p className="font-normal text-gray-700 dark:text-gray-400">
-                Card body {index + 1}
-              </p>
-            </Card>
-          );
-        })}
+    <div className="grid sm:grid-cols-1 md:grid-cols-4 gap-6">
+      {data.map((tweet, index) => {
+        return (
+          <Card
+            key={index}
+            imageSrc={tweet.entities.media![0].media_url_https}
+            retweet={tweet.retweet_count}
+            fav={tweet.favorite_count}
+            date={tweet.created_at}
+          />
+        );
+      })}
     </div>
   );
 };
