@@ -39,5 +39,6 @@ export default async function handler(
   firstPage.pop();
   return res.status(200).json({
     tweets: firstPage,
+    firstId: userTimeline.tweets[0].id_str,
   });
 }
