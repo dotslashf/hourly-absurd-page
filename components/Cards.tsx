@@ -45,10 +45,11 @@ const Cards = () => {
   return (
     <div className="flex flex-col space-y-4">
       <div className="grid sm:grid-cols-1 md:grid-cols-4 gap-6">
-        {data.map((tweet, index) => {
+        {data.map((tweet) => {
           return (
             <Card
-              key={index}
+              id={tweet.id_str}
+              key={tweet.id_str}
               imageSrc={tweet.entities.media![0].media_url_https}
               retweet={tweet.retweet_count}
               fav={tweet.favorite_count}
