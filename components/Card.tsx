@@ -18,9 +18,6 @@ const Card: NextPage<CardProps> = (prop) => {
         className="rounded-t-lg object-cover h-56	md:h-48 w-full"
       />
       <div className="bg-white w-full p-4 relative rounded-b-lg flex justify-between items-center">
-        <span className="text-gray-500 text-sm">
-          {parseTwitterDate(prop.date)}
-        </span>
         <div className="flex flex-wrap justify-end items-center space-x-3">
           <div className="flex items-center text-xs py-1 px-2 text-blue-200 bg-blue-800 rounded-xl">
             <svg
@@ -53,6 +50,9 @@ const Card: NextPage<CardProps> = (prop) => {
             {prop.fav}
           </div>
         </div>
+        <span className="text-right text-gray-600 text-sm">
+          {parseTwitterDate(prop.date)}
+        </span>
       </div>
     </div>
   );

@@ -1,12 +1,10 @@
 import type { NextPage } from "next";
 import Cards from "../components/Cards";
-import NavbarHome from "../components/Navbar";
 
 const Home: NextPage = () => {
   return (
     <>
-      <NavbarHome />
-      <div className="container mx-auto mt-8 px-4 md:px-8">
+      <div className="container mx-auto my-8 px-4 md:px-8">
         <Cards />
       </div>
     </>

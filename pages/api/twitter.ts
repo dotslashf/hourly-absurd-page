@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import readOnlyTwitter from "../../services/twitter";
 
-const tweetToDisplayCount = 10;
+const tweetToDisplayCount = 21;
 
 export default async function handler(
   req: NextApiRequest,
