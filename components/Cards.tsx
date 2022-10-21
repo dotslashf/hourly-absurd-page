@@ -4,6 +4,7 @@ import Card from "./Card";
 
 const Cards = () => {
   const [data, setData] = useState<TweetV1TimelineResult>([]);
+  const [maxId, setMaxId] = useState<string | undefined>(undefined);
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -16,6 +17,15 @@ const Cards = () => {
       });
   }, []);
 
+  function loadNextTweets() {
+    fetch(`/api/twitter?nextPage=true&maxId=${maxId}`)
+      .then((res) => res.json())
+      .then((newData) => {
+        setMaxId(newData.maxId);
+        setData([...data, ...newData.tweets]);
+      });
+  }
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -25,19 +35,22 @@ const Cards = () => {
   }
 
   return (
-    <div className="grid sm:grid-cols-1 md:grid-cols-4 gap-6">
-      {data.map((tweet, index) => {
-        return (
-          <Card
-            key={index}
-            imageSrc={tweet.entities.media![0].media_url_https}
-            retweet={tweet.retweet_count}
-            fav={tweet.favorite_count}
-            date={tweet.created_at}
-          />
-        );
-      })}
-    </div>
+    <>
+      <div className="grid sm:grid-cols-1 md:grid-cols-4 gap-6">
+        {data.map((tweet, index) => {
+          return (
+            <Card
+              key={index}
+              imageSrc={tweet.entities.media![0].media_url_https}
+              retweet={tweet.retweet_count}
+              fav={tweet.favorite_count}
+              date={tweet.created_at}
+            />
+          );
+        })}
+      </div>
+      <button onClick={loadNextTweets}>Next Page</button>
+    </>
   );
 };
 
