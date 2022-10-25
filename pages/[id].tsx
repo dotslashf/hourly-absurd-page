@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import React from "react";
 import { useEffect, useState } from "react";
 import ReactPlayer from "react-player";
 import { TweetV1, TweetV1TimelineResult } from "twitter-api-v2";
